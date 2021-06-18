@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="tests" thread-count="2">
+    <test name="Test Chrome">
+        <classes>
+            <class name="com.rest.api.test.dockerDemo.ChromeDemo"/>
+        </classes>
+    </test>
+
+    <test name="Test Firefox">
+        <classes>
+            <class name="com.rest.api.test.dockerDemo.FFDemo"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,202 @@
+
+SQL_query_to_find_second_highest_salary:
+
+Consider below simple table:
+    Name     Salary
+---------------
+    abc     100000
+    bcd     1000000
+    efg     40000
+    ghi     500000
+
+    How to find the employee whose salary is second highest. For example, in above table, “ghi” has the second highest salary as 500000.
+
+    Below is simple query to find the employee whose salary is highest.
+
+    SELECT name, MAX(salary) as salary FROM employee
+
+    We can nest the above query to find the second largest salary.
+
+    SELECT name, MAX(salary) AS salary
+    FROM employee
+    WHERE salary < (SELECT MAX(salary)
+    FROM employee);
+
+    There are other ways also as suggested by RajnishKrJha.
+
+    SELECT name, MAX(salary) AS salary
+    FROM employee
+    WHERE salary IN
+            (SELECT salary FROM employee MINUS SELECT MAX(salary)
+    FROM employee);
+
+    SELECT name, MAX(salary) AS salary
+    FROM employee
+    WHERE salary  (SELECT MAX(salary)
+    FROM employee);
+
+    One way as suggested by Arka Poddar.
+    IN SQL Server using Common Table Expression or CTE, we can find the second highest salary:
+
+    WITH T AS
+    (
+    SELECT *
+       DENSE_RANK() OVER (ORDER BY Salary Desc) AS Rnk
+    FROM Employees
+    )
+    SELECT Name
+    FROM T
+    WHERE Rnk=2;
+
+    How to find the third largest salary?
+    Simple, we can do one more nesting.
+
+    SELECT name, MAX(salary) AS salary
+      FROM employee
+     WHERE salary < (SELECT MAX(salary)
+                     FROM employee
+                     WHERE salary < (SELECT MAX(salary)
+                     FROM employee)
+                    );
+
+    Note that instead of nesting for second, third, etc largest salary, we can find nth salary using general query like in MySQL:
+
+
+
+    SELECT salary
+    FROM employee
+    ORDER BY salary desc limit n-1,1
+
+    SELECT name, salary
+    FROM employee A
+    WHERE n-1 = (SELECT count(1)
+                 FROM employee B
+                 WHERE B.salary>A.salary)
+
+If multiple employee have same salary.
+Suppose you have to find 4th highest salary
+
+SELECT * FROM employee
+WHERE salary= (SELECT DISTINCT(salary)
+FROM employee ORDER BY salary LIMIT 3,1);
+
+Generic query will be
+
+SELECT * FROM employee
+WHERE salary= (SELECT DISTINCT(salary)
+FROM employee ORDER BY salary LIMIT n-1,1);
+
+
+// another
+
+    EMPNO    SAL
+    ---------------
+    7839    5000
+    7748    2000
+    7689    4000
+    7798    4000
+    7689    3000
+    7898    3000
+    7767    1000
+
+select max(sal) from emp
+where sal not in(select max(sal) from emp);
+
+Or,
+select max(sal) from emp
+where sal<(select max(sal) from emp);
+
+// It should be write when we want to find second highest in
+SELECT MAX(Price) FROM Products
+WHERE Price NOT IN(SELECT MAX(Price) FROM Products);
+
+here database name is: Products
+query table name is: Price
+
+// It should be write when we want to find third highest in
+SELECT MAX(Price) AS Price FROM Products
+WHERE Price < (SELECT MAX(Price) FROM Products WHERE Price < (SELECT MAX(Price) FROM Products));
+
+
+// PAYMENT TABLE
+
+// Highest with payment ID
+SELECT PAYMENT_ID FROM SQLPRO.PAYMENT
+WHERE AMOUNT = (SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT);
+
+// Second highest with payment ID
+SELECT PAYMENT_ID FROM SQLPRO.PAYMENT
+WHERE AMOUNT = (SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT
+WHERE AMOUNT NOT IN(SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT));
+
+
+// Highest with payment ID And Amount
+SELECT PAYMENT_ID, AMOUNT FROM SQLPRO.PAYMENT
+WHERE AMOUNT = (SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT);
+
+
+SELECT * FROM SQLPRO.CUSTOMER WHERE rownum <= 1000;
+SELECT TOP 10 * FROM SalesLT.Product;
+
+
+SELECT * FROM employee
+SELECT * FROM departments
+// return employee record with max salary
+
+SELECT * FROM employee WHERE salary = (SELECT MAX(salary) FROM employee)
+
+SELECT * FROM SQLPRO.PAYMENT WHERE AMOUNT = (SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT)
+
+// select highest salary in employee table
+
+SELECT MAX(salary) FROM employee
+SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT
+
+// select 2nd highest salary in employee table
+
+SELECT MAX(salary) FROM employee
+WHERE salary Not In (SELECT MAX(salary) FROM employee)
+
+SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT
+WHERE AMOUNT Not In (SELECT MAX(AMOUNT) FROM SQLPRO.PAYMENT)
+
+// select range of employee based on id
+
+SELECT * FROM employee
+WHERE employee_id between 2003 and 2008
+
+SELECT * FROM SQLPRO.PAYMENT
+WHERE RENTAL_ID between 100 and 1000
+
+// return employee name, highest salary and departments
+
+SELECT e.first_name, e.last_name, e.salary, d.department_name
+FROM Employee e Inner Join Department d ON (e.department_id = d.department_id)
+WHERE salary IN (SELECT MAX(salary) FROM employee)
+
+SELECT e.FIRST_NAME, e.LAST_NAME, e.ADDRESS_ID, d.AMOUNT
+FROM SQLPRO.CUSTOMER e Inner Join SQLPRO.PAYMENT d ON (e.CUSTOMER_ID = d.CUSTOMER_ID)
+WHERE ADDRESS_ID IN (SELECT MAX(ADDRESS_ID) FROM SQLPRO.CUSTOMER)
+
+SELECT e.FirstName, e.LastName, e.Salary, d.TerritoryID
+FROM Employees e Inner Join EmployeeTerritories d ON (e.EmployeeID = d.EmployeeID)
+WHERE Salary IN (SELECT MAX(Salary) FROM Employees)
+
+SELECT e.FirstName, e.LastName, e.Salary, d.TerritoryID
+FROM Employees e Inner Join EmployeeTerritories d ON (e.EmployeeID = d.EmployeeID)
+WHERE Salary IN (SELECT MAX(Salary) FROM Employees group by EmployeeID) LIMIT 10;
+
+
+// return highest salary, employee name, department name for each departments
+
+SELECT e.first_name, e.last_name, e.salary, d.department_name
+FROM Employee e Inner Join Department d ON (e.department_id = d.department_id)
+WHERE salary IN (SELECT MAX(salary) FROM employee group by department_id)
+
+SELECT e.FIRST_NAME, e.LAST_NAME, e.ADDRESS_ID, d.AMOUNT
+FROM SQLPRO.CUSTOMER e Inner Join SQLPRO.PAYMENT d ON (e.CUSTOMER_ID = d.CUSTOMER_ID)
+WHERE ADDRESS_ID IN (SELECT MAX(ADDRESS_ID) FROM SQLPRO.CUSTOMER group by CUSTOMER_ID)
+
+SELECT e.FirstName, e.LastName, e.Salary, d.TerritoryID
+FROM Employees e Inner Join EmployeeTerritories d ON (e.EmployeeID = d.EmployeeID)
+WHERE Salary IN (SELECT MAX(Salary) FROM Employees group by EmployeeID)

@@ -1,0 +1,217 @@
+
+
+
+// To create a table in sql
+
+CREATE TABLE Employee
+(
+    EmpID int,
+    EmpName varchar(255),
+    Age int,
+    PhoneNumber int,
+    EmailID varchar(255),
+    Address varchar(255)
+
+);
+
+// To insert data into the table
+
+INSERT into Employee values(1, "Tom", 25, 9293368556, "tom@gmail.com", "11, Mary Butler, NY");
+INSERT into Employee values(2, "Steve", 35, 9293368557, "steve@gmail.com", "12, Mary Butler, NJ");
+INSERT into Employee values(3, "Peter", 45, 9293368558, "peterParker@gmail.com", "20, Mary Butler, WA");
+INSERT into Employee values(4, "Peter", 45, 9293368559, "peterDesuza@gmail.com", "14, Mary Butler, VA");
+INSERT into Employee values(2, "Steve", 35, 9293368557, "steve@gmail.com", "12, Mary Butler, NJ");
+
+// To query data from table
+SELECT * FROM Employee;
+
+// To count how many row
+SELECT COUNT(*) FROM Employee;
+
+// To query specific data
+SELECT * FROM Employee where EmpName = "Tom";
+
+SELECT * FROM Employee where EmpName = "Peter" and Age = 45;
+
+SELECT * FROM Employee where Age>25, EmpName = "Peter";
+
+// To query the unique data
+SELECT DISTINCT * FROM Employee;
+
+// To query count unique
+SELECT COUNT(DISTINCT EmpID) FROM Employee;
+
+SELECT COUNT(DISTINCT EmpName) FROM Employee;
+
+// To query by order
+SELECT * FROM Employee ORDER BY EmpID ASC;
+
+SELECT * FROM Employee ORDER BY EmpID DESC;
+
+SELECT * FROM Employee ORDER BY EmpName, Age;
+
+// To query with two conditions
+SELECT * FROM Employee WHERE Age>30 AND EmpID>2;
+
+SELECT * FROM Employee WHERE Age>30 OR EmpID>2;
+
+SELECT * FROM Employee WHERE Age>30 AND EmpID>2 AND PhoneNumber = 9293368559;
+
+SELECT * FROM Employee WHERE Age>30 AND Age<40;
+
+
+
+// To create a table in sql
+
+CREATE TABLE Customer
+(
+    ID int,
+    Name varchar(255),
+    PhoneNumber int,
+    EmailID varchar(255),
+    Country varchar(255),
+    City varchar(255)
+
+);
+
+// To insert data into the table
+
+INSERT into Customer values(10, "Tom", 9293368556, "tom@gmail.com", "USA", "LA");
+INSERT into Customer values(20, "Tommy", 9293368557, "tommy@gmail.com", "UK", "LONDON");
+INSERT into Customer values(30, "Thomas", 9293368558, "thomas@gmail.com", "GERMANY", "BERLIN");
+INSERT into Customer values(40, "Peter", 9293368559, "peterDesuza@gmail.com", "BRAZIL", "ABC");
+INSERT into Customer values(50, "Steve", 9293368560, "steve@gmail.com", "INDIA", "DELHI");
+INSERT into Customer values(60, "John", 9293368561, "john@gmail.com", "AUSTRALIA", "SYDNEY");
+INSERT into Customer values(70, "Chris", 9293368561, "chris@gmail.com", "GERMANY", "MUNICH");
+
+
+SELECT * FROM Customer
+
+SELECT * FROM Customer WHERE Country = "GERMANY" OR Country = "INDIA";
+
+SELECT * FROM Customer WHERE NOT Country = "GERMANY";
+
+SELECT * FROM Customer WHERE Country = "GERMANY" AND (City="BERLIN" OR City="MUNICH";
+
+SELECT * FROM Customer WHERE Country = "GERMANY" AND NOT Country = "USA";
+
+
+/// we will learn about: LIKE patterns in SQL with % and _ patterns.
+
+Some Examples:
+--select * from Customer where Name LIKE 'TOM%';
+--select * from Customer where Name LIKE '%y';
+--select * from Customer where Name LIKE '%om%';
+--select * from Customer where Name LIKE '_h%';
+--select * from Customer where Name LIKE 'T__%';
+--select * from Customer where Name LIKE 'T%y';
+
+----Also, we will learn about IS NULL and IS NOT NULL in SQL to deal with NULL values in Columns in DB Table.
+
+// LIKE
+--Khaled
+--Khalil
+--Khatun
+--Khamila
+
+
+CREATE TABLE Customer
+(
+    ID int,
+    Name varchar(255),
+    PhoneNumber int,
+    EmailID varchar(255),
+    Country varchar(255),
+    City varchar(255)
+
+);
+
+// To insert data into the table
+
+INSERT into Customer values(10, "Tom", 9293368556, "tom@gmail.com", "USA", "LA");
+INSERT into Customer values(20, "Tommy", 9293368557, "tommy@gmail.com", "UK", "LONDON");
+INSERT into Customer values(30, "Thomas", 9293368558, "thomas@gmail.com", "GERMANY", "BERLIN");
+INSERT into Customer values(40, "Peter", 9293368559, "peterDesuza@gmail.com", "BRAZIL", "ABC");
+INSERT into Customer values(50, "Steve", 9293368560, "steve@gmail.com", "INDIA", "DELHI");
+INSERT into Customer values(60, "John", 9293368561, "john@gmail.com", NULL, "SYDNEY");
+INSERT into Customer values(70, "Chris", 9293368561, "chris@gmail.com", "GERMANY", "MUNICH");
+
+//
+
+SELECT * FROM Customer
+
+--% and _
+--LIKE
+
+// Name start with
+SELECT * FROM Customer WHERE Name LIKE 'T%';
+
+SELECT * FROM Customer WHERE Name LIKE 'J%';
+
+SELECT * FROM Customer WHERE Name LIKE 'TOM%';
+
+// Name ending with
+SELECT * FROM Customer WHERE Name LIKE '%y';
+
+// Name with
+SELECT * FROM Customer WHERE Name LIKE '%om%';
+
+SELECT * FROM Customer WHERE Name LIKE '_h%';
+
+SELECT * FROM Customer WHERE Name LIKE 'T__%';
+
+SELECT * FROM Customer WHERE Name LIKE 'T%y';
+
+// IS NULL
+SELECT * FROM Customer WHERE Country IS NULL;
+
+// IS NOT NULL
+SELECT * FROM Customer WHERE Country IS NOT NULL;
+
+
+// To create a table in sql and find Highest salary
+
+CREATE TABLE Employee
+(
+    EmpID int,
+    EmpName varchar(255),
+    Age int,
+    PhoneNumber int,
+    EmailID varchar(255),
+    Address varchar(255),
+    Salary int
+
+);
+
+// To insert data into the table
+
+INSERT into Employee values(1, "Tom", 25, 9293368556, "tom@gmail.com", "11, Mary Butler, NY", 1000);
+INSERT into Employee values(2, "Steve", 35, 9293368557, "steve@gmail.com", "12, Mary Butler, NJ", 8000);
+INSERT into Employee values(3, "Peter", 45, 9293368558, "peterParker@gmail.com", "20, Mary Butler, WA", 6000);
+INSERT into Employee values(4, "Peter", 45, 9293368559, "peterDesuza@gmail.com", "14, Mary Butler, VA", 5000);
+INSERT into Employee values(2, "Steve", 35, 9293368557, "steve@gmail.com", "12, Mary Butler, NJ", 10000);
+
+SELECT * FROM Employee;
+
+// highest salary
+SELECT MAX(Salary) FROM Employee;
+
+// Inner Query (2nd highest salary)
+SELECT MAX(Salary) FROM Employee WHERE Salary < (SELECT MAX(Salary) FROM Employee);
+
+// Inner Query (3rd highest salary)
+SELECT MAX(Salary) FROM Employee WHERE Salary < (SELECT MAX(Salary) FROM Employee WHERE Salary < (SELECT MAX(Salary) FROM Employee));
+
+
+// LIMIT
+SELECT * FROM Employee LIMIT 2;
+
+// nth number of salary
+SELECT Salary FROM Employee ORDER BY Salary DESC LIMIT n-1,1;
+
+SELECT Salary FROM Employee ORDER BY Salary DESC LIMIT 2-1,1;
+
+
+
+
+
